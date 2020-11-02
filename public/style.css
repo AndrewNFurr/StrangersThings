@@ -1,0 +1,26 @@
+.log {
+    position: fixed;
+  
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  
+    backdrop-filter: blur(3px);
+    background-color: rgba(0, 0, 0, 0.4);
+    
+    font-family: 'Roboto', sans-serif;
+    font-size: 2rem;
+    text-align: center;
+  }
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #c0c000;
+}
+
+.accounts {
+    padding: 5px;
+}
