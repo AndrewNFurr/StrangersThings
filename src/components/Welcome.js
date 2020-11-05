@@ -1,8 +1,14 @@
 import React from 'react';
 
-const Welcome = () => {
+const Welcome = ({
+    setCurrentUser,
+    currentUser
+}) => {
     return <div>
-        <h1>Welcome to Stranger's Things!</h1>
+        <h1>Welcome to Stranger's Things, { currentUser.username }!</h1>
+        <button onClick={() => {
+            setCurrentUser(null);
+        }}>Log Out</button>
     </div>;
 }
 

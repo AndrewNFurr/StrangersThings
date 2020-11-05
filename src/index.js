@@ -20,7 +20,7 @@ import {
 
 const App = () => {
 
-    const [currentUser, setCurrentUser] = useState('');
+    const [currentUser, setCurrentUser] = useState({});
     const [userList, setUserList] = useState([]);
 
     return <div className='app'>
@@ -28,15 +28,11 @@ const App = () => {
         {
             !currentUser
                 ? <Switch>
-                    <Route path='/login'>
-                        <LogIn setCurrentUser={ setCurrentUser }
-                               currentUser={ currentUser }
-                               userList={ userList }/>
-                    </Route>
                     <Route path='/signup'>
                         <SignUp setCurrentUser={ setCurrentUser }
                                 setUserList={ setUserList }
-                                currentUser={ currentUser } />
+                                currentUser={ currentUser }
+                                userList={ userList } />
                     </Route>
                     <Route path='/'>
                     <h2>
@@ -47,7 +43,13 @@ const App = () => {
                 </Route>
                 </Switch>
             : <Switch>
-                <Welcome />
+                <Route path='/users/register'>
+                        <p>{ currentUser.username }</p>
+                </Route>
+                <Route path='/'>
+                    <Welcome setCurrentUser={ setCurrentUser }
+                            currentUser={ currentUser } />
+                </Route>
             </Switch>
         }
         <Footer />

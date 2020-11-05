@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import { fetchPosts } from '../api'
 
 
 
@@ -7,20 +9,25 @@ const LogIn = ({
     currentUser,
     setUserList
 }) => {
-    return <form>
+    const [username, setUsername] = useState('')
+    return <form onSubmit={(event) => {
+        event.preventDefault();
+        // axios request, to /users/register send password and username...
+    }}>
         <h3>Log in to Stranger's Things</h3>
         <hr/>
         <div id='email'>
             <input type='email'
+            value={ username }
+            onChange={ (e) => setUsername(e.target.value) }
                    placeholder='Email Address'/>
         </div>
         <div id='password'>
             <input type='password'
                    placeholder='password' />
         </div>
-        <button onSubmit={(event) => {
-            event.preventDefault();
-            
+        <button onClick={async () => {
+            const data = await fetchPosts();
         }}>Log In</button>
     </form>
 }
