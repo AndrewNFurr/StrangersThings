@@ -1,18 +1,8 @@
 import React from 'react';
 
-const Header = ({
-    setHasAccount
-}) => {
+const Header = () => {
     return <div id='header'>
-        <h1>Craig's List Lite</h1>
-        <div className='accounts'>
-            <button onClick={() => {
-                setHasAccount(false)
-            }}>Create an Account</button>
-            <button onClick={() => {
-                setHasAccount(true)
-            }}>Log In</button>
-        </div>
+        <h1>Stranger's Things</h1>
     </div>
 }
 

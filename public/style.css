@@ -1,26 +1,44 @@
-.log {
-    position: fixed;
-  
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  
-    backdrop-filter: blur(3px);
-    background-color: rgba(0, 0, 0, 0.4);
-    
-    font-family: 'Roboto', sans-serif;
-    font-size: 2rem;
-    text-align: center;
+* {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
+.log-form {
+    position: relative;
+    top: 50px;
+    left: 38%;
+
+    height: 150px;
+    width: 300px;
+
+    display: flex;
+    justify-content: center;
+    border-radius: 1px solid black;
+
+    box-shadow: 2px 0px -4px 2px;
+    background-color: aquamarine;
+}
+
 
 #header {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: #c0c000;
+
+    background-color: #cb4200;
+    color: white;
+
+    padding: 1em;
 }
 
 .accounts {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
     padding: 5px;
 }
+
