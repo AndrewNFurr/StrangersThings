@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom'
 import {
     BrowserRouter as Router,
@@ -11,50 +11,59 @@ import {
 
 
 import { 
-    LogIn,
-    SignUp,
+    Auth,
     Header,
     Welcome,
-    Footer
+    Footer,
+    PostForm,
+    PostView
  } from './components';
+
+ import { getToken, hitAPI } from "./api";
 
 const App = () => {
 
+    const [isLoggedIn, setIsLoggedIn] = useState(!!getToken());
     const [currentUser, setCurrentUser] = useState({});
-    const [userList, setUserList] = useState([]);
+    const [userPosts, setUserPosts] = useState([]);
+    const [postList, setPostList] = useState([]);
 
-    return <div className='app'>
-        <Header  />
-        {
-            !currentUser
-                ? <Switch>
-                    <Route path='/signup'>
-                        <SignUp setCurrentUser={ setCurrentUser }
-                                setUserList={ setUserList }
-                                currentUser={ currentUser }
-                                userList={ userList } />
-                    </Route>
-                    <Route path='/'>
-                    <h2>
-                        Please Log in or Sign up to continue
-                    </h2>
-                    <NavLink to="/login" activeClassName="current">Log In</NavLink>
-                    <NavLink to="/signup" activeClassName="current">Sign Up</NavLink >
-                </Route>
-                </Switch>
-            : <Switch>
-                <Route path='/users/register'>
-                        <p>{ currentUser.username }</p>
-                </Route>
-                <Route path='/'>
-                    <Welcome setCurrentUser={ setCurrentUser }
-                            currentUser={ currentUser } />
-                </Route>
-            </Switch>
-        }
-        <Footer />
-    </div>
-}
+  useEffect(() => {
+    hitAPI("GET", "/posts")
+      .then((data) => {
+        const { posts } = data;
+        setPostList(posts);
+      })
+      .catch(console.error);
+  }, [isLoggedIn]);
+
+
+        return (
+            <div className="app">
+            <Header />
+            {isLoggedIn ? (
+                <>
+                <Welcome setIsLoggedIn={setIsLoggedIn}
+                         currentUser={currentUser}
+                         setCurrentUser={setCurrentUser}/>
+                <PostForm />
+                <PostView userPosts={userPosts}
+                          setUserPosts={setUserPosts}
+                          postList={postList}
+                          setPostList={setPostList}/>
+                </>
+            ) : (
+                <Auth setIsLoggedIn={setIsLoggedIn}
+                      postList={postList}
+                      setPostList={setPostList} />
+                     
+            )}
+                
+            <Footer />
+            </div>
+        );
+        };
+
 
 ReactDOM.render(
     <Router>

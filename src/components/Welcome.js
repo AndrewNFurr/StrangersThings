@@ -1,14 +1,21 @@
 import React from 'react';
+import { getToken, clearToken, getPosts } from "../api";
 
 const Welcome = ({
     setCurrentUser,
-    currentUser
+    currentUser,
+    setIsLoggedIn
 }) => {
     return <div>
-        <h1>Welcome to Stranger's Things, { currentUser.username }!</h1>
-        <button onClick={() => {
-            setCurrentUser(null);
-        }}>Log Out</button>
+        <h1>Welcome to Stranger's Things!</h1>
+        <button
+                    onClick={() => {
+                    clearToken();
+                    setIsLoggedIn(false);
+                    }}
+                >
+                    LOG OUT
+                </button>
     </div>;
 }
 
