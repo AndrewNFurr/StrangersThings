@@ -64,7 +64,7 @@ const PostView = ({
                                                      handleClick={() => {
                                                        const payload = {
                                                            message: {
-                                                               content: content
+                                                               content: "this"
                                                            }
                                                        } 
                                                        console.log(content)
