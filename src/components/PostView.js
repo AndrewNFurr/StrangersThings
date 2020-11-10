@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { getUser, hitAPI } from '../api';
 
 const MessageForm = ({
-    handleClick,
-    //content,
-   // setContent
+    handleClick
 }) => {
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState('')
+    
     return <form onSubmit={(event) => event.preventDefault()}>
                          <input
                             type="text"
@@ -16,17 +15,14 @@ const MessageForm = ({
                             }}
                             placeholder="Message to Author"
                                                     />
-                          <button onClick={handleClick}>Post Message</button>
+                          <button onClick={() => handleClick(content)}>Post Message</button>
                          </form>
 }
 
 const PostView = ({
     postList,
-    content
 }) => {
     const [commentView, setCommentView] = useState(false);
-    
-    
 
     return <div className='list'>
         {postList.map((post) => {
@@ -59,16 +55,17 @@ const PostView = ({
                                     </div>
                                     : <div className='user-options'>
                                         <MessageForm 
-                                                     //content={content}
-                                                     //setContent={setContent}
-                                                     handleClick={() => {
-                                                       const payload = {
-                                                           message: {
-                                                               content: "this"
-                                                           }
-                                                       } 
-                                                       console.log(content)
-                                                       hitAPI("POST", `/posts/${post._id}/messages`, payload) 
+                                                     handleClick={async (content) => {
+                                                        const payload = {
+                                                            message: {
+                                                                content: content
+                                                            }
+                                                        } 
+                                                        try {
+                                                            hitAPI("POST", `/posts/${post._id}/messages`, payload) 
+                                                        } catch (error) {
+                                                            console.error(error);
+                                                        }
                                                      }}/>
                                     </div>
                                 }

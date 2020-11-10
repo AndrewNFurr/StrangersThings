@@ -27,6 +27,7 @@ const App = () => {
     const [currentUser, setCurrentUser] = useState({});
     const [userPosts, setUserPosts] = useState([]);
     const [postList, setPostList] = useState([]);
+    
 
     function addNewPost(newPost) {
         setPostList([newPost, ...postList])
