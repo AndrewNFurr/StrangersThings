@@ -34,9 +34,8 @@ const PostForm = ({
             onChange={(event) => setLocation(event.target.value)}
             placeholder="Price"
       />
-      <button onClick={async ()=> {
+      <button onClick={async () => {
          const resp = makeUserPost(postTitle, postContent, price);
-         addNewPost(resp);
       }}>Create Post</button>
     </form>
 }
