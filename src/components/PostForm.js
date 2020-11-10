@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { makeUserPost, getUser } from '../api';
 
-const PostForm = () =>{
+const PostForm = ({
+    addNewPost
+}) =>{
     const [postTitle, setPostTitle] = useState('');
     const [postContent, setPostContent] = useState('');
     const [price, setPrice] = useState('');
+    const [location, setLocation] = useState('')
 
     return <form onSubmit={(event) => event.preventDefault()}>
         <input
@@ -25,8 +28,15 @@ const PostForm = () =>{
             onChange={(event) => setPrice(event.target.value)}
             placeholder="Price"
       />
-      <button onClick={()=> {
-          makeUserPost(postTitle, postContent, price);
+      <input
+            type="text"
+            value={location}
+            onChange={(event) => setLocation(event.target.value)}
+            placeholder="Price"
+      />
+      <button onClick={async ()=> {
+         const resp = makeUserPost(postTitle, postContent, price);
+         addNewPost(resp);
       }}>Create Post</button>
     </form>
 }

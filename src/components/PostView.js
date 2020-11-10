@@ -1,35 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { getUser, hitAPI, createMessage } from '../api';
+import { getUser, hitAPI } from '../api';
 
 const MessageForm = ({
-    postList,
-    setPostList
+    handleClick,
+    //content,
+   // setContent
 }) => {
-    
-
-
-    
+    const [content, setContent] = useState('');
+    return <form onSubmit={(event) => event.preventDefault()}>
+                         <input
+                            type="text"
+                            value={content}
+                            onChange={(event) => {
+                                setContent(event.target.value)
+                            }}
+                            placeholder="Message to Author"
+                                                    />
+                          <button onClick={handleClick}>Post Message</button>
+                         </form>
 }
 
 const PostView = ({
-    userPosts,
-    setUserPosts,
     postList,
-    setPostList
+    content
 }) => {
     const [commentView, setCommentView] = useState(false);
-    const [formView, setFormView] = useState(false);
-    const [content, setContent] = useState('')
+    
+    
 
-    useEffect(async () => {
-        getUser()
-              .then(response => {
-                  const { posts } = response;
-                  
-                  setUserPosts(posts);
-              }).catch(error => {error}), [postList]});
-
-    return <div>
+    return <div className='list'>
         {postList.map((post) => {
                             return (
                             <div
@@ -49,7 +48,6 @@ const PostView = ({
                                     <div className='user-options'>
                                     <button onClick={() => {
                                         hitAPI("DELETE", `/posts/${post._id}`);
-                                        setPostList(posts);
                                     }}>Delete</button>
 
                                     <button onClick={() => {
@@ -60,41 +58,32 @@ const PostView = ({
                                     <button>Edit</button>
                                     </div>
                                     : <div className='user-options'>
-                                        <button  onClick={() => {
-                                                setFormView(!formView)
-                                                const id = post._id;
-                                                
-                                                const thispost = postList.find(post => post._id == id)
-                                                
-                                        }}>Create Message</button>
+                                        <MessageForm 
+                                                     //content={content}
+                                                     //setContent={setContent}
+                                                     handleClick={() => {
+                                                       const payload = {
+                                                           message: {
+                                                               content: content
+                                                           }
+                                                       } 
+                                                       console.log(content)
+                                                       hitAPI("POST", `/posts/${post._id}/messages`, payload) 
+                                                     }}/>
                                     </div>
                                 }
                                 <div>
                                     {
                                          commentView == true ?
                                          post.messages.map((message, idx) => {
-                                         return <div>
-                                                 <p key={idx}
+                                         return <div key={idx}>
+                                                 <p 
                                                     style={{
                                                         border: "1px solid black"
                                                     }}
                                                     >{message.content}</p>
                                              </div>
-                                         }) : formView == true ? 
-                                         <form onSubmit={(event) => event.preventDefault()}>
-                                                <input
-                                                    type="text"
-                                                    value={content}
-                                                    onChange={(event) => setContent(event.target.value)}
-                                                    placeholder="Message to Author"
-                                                    />
-                                            <button onClick={() => {
-                                                 console.log(post._id, post);
-                                                 const newMessage = createMessage(content, post._id);
-                                                 console.log(newMessage);
-                                            }}>Post Message</button>
-                                         </form>
-                                           : null        
+                                         }) : null        
                                     }
                                 </div>
                             </div>

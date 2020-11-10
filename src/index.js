@@ -28,6 +28,10 @@ const App = () => {
     const [userPosts, setUserPosts] = useState([]);
     const [postList, setPostList] = useState([]);
 
+    function addNewPost(newPost) {
+        setPostList([newPost, ...postList])
+    }
+
   useEffect(() => {
     hitAPI("GET", "/posts")
       .then((data) => {
@@ -46,7 +50,7 @@ const App = () => {
                 <Welcome setIsLoggedIn={setIsLoggedIn}
                          currentUser={currentUser}
                          setCurrentUser={setCurrentUser}/>
-                <PostForm />
+                <PostForm addNewPost={ addNewPost } />
                 <PostView userPosts={userPosts}
                           setUserPosts={setUserPosts}
                           postList={postList}
