@@ -27,7 +27,7 @@ export function makeHeaders() {
     }
 
 
-export const makeUserPost = async(title, description, price) => {
+export const makeUserPost = async(title, description, price, location) => {
     const response = await fetch(`${BASE_URL}/posts`, {
         method: "POST",
         headers: {
@@ -38,7 +38,8 @@ export const makeUserPost = async(title, description, price) => {
           post: {
             title: title,
             description: description,
-            price: price
+            price: price,
+            location: location
           },
         }),
       });

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { getUser, hitAPI } from '../api';
+import React, { useState } from 'react';
+import { hitAPI } from '../api';
 
 const MessageForm = ({
     handleClick
@@ -15,12 +15,16 @@ const MessageForm = ({
                             }}
                             placeholder="Message to Author"
                                                     />
-                          <button onClick={() => handleClick(content)}>Post Message</button>
+                          <button onClick={() => {
+                              handleClick(content)
+                              setContent("");
+                            }}>Post Message</button>
                          </form>
 }
 
 const PostView = ({
     postList,
+    setPostList
 }) => {
     const [commentView, setCommentView] = useState(false);
 
@@ -35,21 +39,27 @@ const PostView = ({
                                 }}
                             >
                                 <h5>
-                                {post.title} ({post.location})
+                                {post.title} ({post.location}) {post.price}
                                 </h5>
+                                
                                 <p>{post.description}</p>
 
                                 {
                                     (post.isAuthor) ?
                                     <div className='user-options'>
-                                    <button onClick={() => {
-                                        hitAPI("DELETE", `/posts/${post._id}`);
+                                    <button onClick={async () => {
+                                        try {
+                                            hitAPI("DELETE", `/posts/${post._id}`);
+                                            setPostList(postList);
+                                        } catch(error) {
+                                            console.log(error)
+                                        }
                                     }}>Delete</button>
 
                                     <button onClick={() => {
                                         console.log(post.messages, post)
                                         setCommentView(!commentView);
-                                    }}>{commentView ? 'Close Comments' : 'See Comments' }</button>
+                                    }}>Messages</button>
 
                                     <button>Edit</button>
                                     </div>
@@ -66,6 +76,7 @@ const PostView = ({
                                                         } catch (error) {
                                                             console.error(error);
                                                         }
+                                                       
                                                      }}/>
                                     </div>
                                 }

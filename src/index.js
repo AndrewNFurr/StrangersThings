@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom'
-import {
-    BrowserRouter as Router,
-    Route,
-    Switch,
-    Redirect,
-    Link,
-    NavLink
-  } from 'react-router-dom';
-
 
 import { 
     Auth,
@@ -16,7 +7,7 @@ import {
     Welcome,
     Footer,
     PostForm,
-    PostView
+    PostView,
  } from './components';
 
  import { getToken, hitAPI } from "./api";
@@ -24,46 +15,61 @@ import {
 const App = () => {
 
     const [isLoggedIn, setIsLoggedIn] = useState(!!getToken());
-    const [currentUser, setCurrentUser] = useState({});
-    const [userPosts, setUserPosts] = useState([]);
     const [postList, setPostList] = useState([]);
-    
+    const [searchResults, setSearchResults] = useState('');    
+    const [isRecent, setIsRecent] = useState();
+    const [searchTerm, setSearchTerm] = useState('');
 
     function addNewPost(newPost) {
-        setPostList([newPost, ...postList])
+        setPostList([...postList, newPost])
     }
 
-  useEffect(() => {
+    function filteredPosts() {
+        return postList.filter((post) => {
+            return post.title.toLowerCase().includes(searchTerm.toLowerCase());
+        })
+    }
+
+  useEffect(async () => {
     hitAPI("GET", "/posts")
       .then((data) => {
         const { posts } = data;
         setPostList(posts);
       })
       .catch(console.error);
-  }, [isLoggedIn]);
+  }, [isLoggedIn, postList]);
 
 
         return (
             <div className="app">
             <Header />
+            <div id="search" >
+                      <label htmlFor="keywords">Search For a Post</label>
+                      <input 
+                        id="keywords" 
+                        type="text" 
+                        placeholder="Enter Post Title" 
+                        value={ searchTerm } 
+                        onChange={
+                                  (event) => {
+                                    setSearchTerm(event.target.value);
+                                  }}/>
+                   </div> 
             {isLoggedIn ? (
                 <>
-                <Welcome setIsLoggedIn={setIsLoggedIn}
-                         currentUser={currentUser}
-                         setCurrentUser={setCurrentUser}/>
-                <PostForm addNewPost={ addNewPost } />
-                <PostView userPosts={userPosts}
-                          setUserPosts={setUserPosts}
-                          postList={postList}
-                          setPostList={setPostList}/>
+                <Welcome setIsLoggedIn={setIsLoggedIn}/>
+                <PostForm addNewPost={ addNewPost }
+                           />
+                <PostView setSearchResults={setSearchResults}
+                          postList={filteredPosts()}
+                          setPostList={setPostList}
+                          searchResults={searchResults}/>
                 </>
             ) : (
                 <Auth setIsLoggedIn={setIsLoggedIn}
-                      postList={postList}
-                      setPostList={setPostList} />
-                     
+                      postList={filteredPosts()}
+                      setPostList={setPostList} />   
             )}
-                
             <Footer />
             </div>
         );
@@ -71,8 +77,6 @@ const App = () => {
 
 
 ReactDOM.render(
-    <Router>
-    <App />
-    </Router>,
+    <App />,
     document.getElementById('app')
 )

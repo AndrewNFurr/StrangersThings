@@ -2,8 +2,6 @@ import React from 'react';
 import { getToken, clearToken, getPosts } from "../api";
 
 const Welcome = ({
-    setCurrentUser,
-    currentUser,
     setIsLoggedIn
 }) => {
     return <div>

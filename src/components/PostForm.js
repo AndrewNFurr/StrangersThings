@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { makeUserPost, getUser } from '../api';
+import { makeUserPost } from '../api';
 
 const PostForm = ({
-    addNewPost
+    addNewPost,
+    setPostList,
+    postList
 }) =>{
     const [postTitle, setPostTitle] = useState('');
     const [postContent, setPostContent] = useState('');
@@ -32,12 +34,15 @@ const PostForm = ({
             type="text"
             value={location}
             onChange={(event) => setLocation(event.target.value)}
-            placeholder="Price"
+            placeholder="Location"
       />
       <button onClick={async () => {
-         const resp = makeUserPost(postTitle, postContent, price);
+         const newPost = await makeUserPost(postTitle, postContent, price, location);
+         addNewPost(newPost.data.post);
+         
       }}>Create Post</button>
     </form>
+
 }
 
 export default PostForm;

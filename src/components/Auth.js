@@ -1,25 +1,16 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-import { getPosts, auth } from "../api";
+import { auth } from "../api";
 
 const Auth = ({
     setIsLoggedIn,
     postList,
-    setPostList
 }) => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
-
-  useEffect(async () => {
-      getPosts()
-            .then(response => {
-                const posts = response.data.posts
-                
-                setPostList(posts);
-            }).catch(error => {error}), [postList]});
 
 
   return ( <>
@@ -70,7 +61,7 @@ const Auth = ({
                                 className="post"
                                 key={post._id}
                                 style={{
-                                border: post.isAuthor ? "5px solid gold" : "1px solid brown",
+                                border: "1px solid brown"
                                 }}
                             >
                                 <h5>
