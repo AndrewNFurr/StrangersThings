@@ -26,7 +26,7 @@ const MessageView = ({
 }) => {
     const [commentView, setCommentView] = useState(false);
 
-    return <div><button onClick={() => {
+    return <><button onClick={() => {
         setCommentView(!commentView);
     }}>Messages</button>
 
@@ -42,13 +42,14 @@ const MessageView = ({
         </div>
     }) : null
     }
-    </div>  
+    </>  
     
 }
 
 const PostView = ({
     postList,
-    setPostList
+    setPostList,
+    setEditablePost,
 }) => {
     return <div className='list'>
         {postList.map((post) => {
@@ -63,7 +64,6 @@ const PostView = ({
                                 <h5>
                                 {post.title} ({post.location}) {post.price}
                                 </h5>
-                                
                                 <p>{post.description}</p>
 
                                 {
@@ -78,7 +78,9 @@ const PostView = ({
                                         }
                                     }}>Delete</button>
 
-                                    <button>Edit</button>
+                                    <button onClick={() => {
+                                        setEditablePost(post)
+                                    }}>Edit</button>
                                     <MessageView messageList={ post.messages } />
                                     </div>
                                     : <div className='user-options'>

@@ -7,7 +7,7 @@ import {
     Welcome,
     Footer,
     PostForm,
-    PostView,
+    PostView
  } from './components';
 
  import { getToken, hitAPI } from "./api";
@@ -17,11 +17,23 @@ const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(!!getToken());
     const [postList, setPostList] = useState([]);
     const [searchResults, setSearchResults] = useState('');    
-    const [isRecent, setIsRecent] = useState();
+    //const [isRecent, setIsRecent] = useState();
     const [searchTerm, setSearchTerm] = useState('');
+    const [editablePost, setEditablePost] = useState({})
 
     function addNewPost(newPost) {
         setPostList([...postList, newPost])
+    }
+
+    function updatePost(updatedPost) {
+        let index = postList.findIndex((post) => {
+            return post._id === updatedPost._id
+        })
+        if (index > -1) {
+      let postListCopy = [...postList];
+      postListCopy[index] = updatedPost;
+      setPostList(postListCopy);
+    }
     }
 
     function filteredPosts() {
@@ -56,17 +68,23 @@ const App = () => {
                                   }}/>
                    </div> 
             {isLoggedIn ? (
-                <>
-                <Welcome setIsLoggedIn={setIsLoggedIn}/>
-                <div className="logged-in-view">
-                        <PostForm addNewPost={ addNewPost }
-                                    />
+                <main id="main">
+                    <Welcome setIsLoggedIn={setIsLoggedIn}/>
+                    
+                    <div className="logged-in-view">
+                            <PostForm addNewPost={ addNewPost }
+                                      {...editablePost}
+                                      setEditablePost={setEditablePost}
+                                      updatePost={updatePost}
+                                        />
                             <PostView setSearchResults={setSearchResults}
-                                    postList={filteredPosts()}
-                                    setPostList={setPostList}
-                                    searchResults={searchResults}/>
-                </div>
-                </>
+                                postList={filteredPosts()}
+                                setEditablePost={setEditablePost}
+                                setPostList={setPostList}
+                                />
+                    </div>
+                </main>
+                
             ) : (
                 <Auth setIsLoggedIn={setIsLoggedIn}
                       postList={filteredPosts()}

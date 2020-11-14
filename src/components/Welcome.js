@@ -1,5 +1,5 @@
 import React from 'react';
-import { getToken, clearToken, getPosts } from "../api";
+import { clearToken } from "../api";
 
 const Welcome = ({
     setIsLoggedIn

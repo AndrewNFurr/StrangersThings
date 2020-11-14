@@ -15,19 +15,20 @@ const setToken = (token) => {
     localStorage.setItem("auth-token", token);
   };
 
-export function makeHeaders() {
+  function makeHeaders() {
+    let base = {
+      "Content-Type": "application/json",
+    };
+  
     if (getToken()) {
-        return  {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${ getToken() }` 
-            }
-    } else return {
-            "Content-Type": "application/json", 
-        }
+      base["Authorization"] = `Bearer ${getToken()}`;
     }
+  
+    return base;
+  }
 
 
-export const makeUserPost = async(title, description, price, location) => {
+export const makeUserPost = async(title, description, price,) => {
     const response = await fetch(`${BASE_URL}/posts`, {
         method: "POST",
         headers: {
@@ -106,9 +107,9 @@ export async function getPosts() {
   
     const { error, data } = await response.json();
   
-    /*if (error) {
+    if (error) {
       throw Error(error.message);
-    } */
+    }
   
     if (data && data.token) {
       setToken(data.token);
