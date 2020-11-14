@@ -68,10 +68,12 @@ const App = () => {
         }} />
     </div> 
     <div className="logged-in-view">
-      <PostForm addNewPost={ addNewPost }
-                {...editablePost}
-                setEditablePost={setEditablePost}
-                updatePost={updatePost} />
+      {isLoggedIn ?
+        <PostForm addNewPost={ addNewPost }
+                  {...editablePost}
+                  setEditablePost={setEditablePost}
+                  updatePost={updatePost} /> : null
+      }
       <PostView setSearchResults={setSearchResults}
                                 postList={filteredPosts()}
                                 setEditablePost={setEditablePost}
