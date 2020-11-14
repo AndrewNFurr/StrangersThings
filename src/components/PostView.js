@@ -66,6 +66,7 @@ const PostView = ({
                                 {post.title} ({post.location}) {post.price}
                                 </h5>
                                 <p>{post.description}</p>
+                                <p>{post.willDeliver ? 'Yes' : 'No'}</p>
 
                                 {(isLoggedIn) ?
                                     ((post.isAuthor) ?
@@ -81,6 +82,7 @@ const PostView = ({
 
                                     <button onClick={() => {
                                         setEditablePost(post)
+                                        console.log(post.willDeliver)
                                     }}>Edit</button>
                                     <MessageView messageList={ post.messages } />
                                     </div>
