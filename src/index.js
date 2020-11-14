@@ -40,42 +40,37 @@ const App = () => {
   }, [isLoggedIn, postList]);
 
 
-        return (
-            <div className="app">
-            <Header />
-            <div id="search" >
-                      <label htmlFor="keywords">Search For a Post</label>
-                      <input 
-                        id="keywords" 
-                        type="text" 
-                        placeholder="Enter Post Title" 
-                        value={ searchTerm } 
-                        onChange={
-                                  (event) => {
-                                    setSearchTerm(event.target.value);
-                                  }}/>
-                   </div> 
-            {isLoggedIn ? (
-                <>
-                <Welcome setIsLoggedIn={setIsLoggedIn}/>
-                <div className="logged-in-view">
-                        <PostForm addNewPost={ addNewPost }
-                                    />
-                            <PostView setSearchResults={setSearchResults}
-                                    postList={filteredPosts()}
-                                    setPostList={setPostList}
-                                    searchResults={searchResults}/>
-                </div>
-                </>
-            ) : (
-                <Auth setIsLoggedIn={setIsLoggedIn}
-                      postList={filteredPosts()}
-                      setPostList={setPostList} />   
-            )}
-            <Footer />
-            </div>
-        );
-        };
+  return (
+    <>
+    <Header
+      isLoggedIn={isLoggedIn}
+      setIsLoggedIn={setIsLoggedIn}
+      setPostList={setPostList}
+      postList={filteredPosts()} />
+    <div id="search" >
+      <label htmlFor="keywords">Search For a Post</label>
+      <input 
+        id="keywords" 
+        type="text" 
+        placeholder="Enter Post Title" 
+        value={ searchTerm } 
+        onChange={(event) => {
+          setSearchTerm(event.target.value);
+        }} />
+    </div> 
+    <div className="logged-in-view">
+      <PostForm addNewPost={ addNewPost } />
+      <PostView
+        setSearchResults={setSearchResults}
+        postList={filteredPosts()}
+        setPostList={setPostList}
+        searchResults={searchResults}
+        isLoggedIn={isLoggedIn} />
+    </div>
+    <Footer />
+    </>
+  );
+};
 
 
 ReactDOM.render(

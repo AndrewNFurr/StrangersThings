@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 
 import { auth } from "../api";
@@ -13,7 +12,7 @@ const Auth = ({
   const [errorMessage, setErrorMessage] = useState(null);
 
 
-  return ( <>
+  return (
     <form onSubmit={(event) => event.preventDefault()}>
       <h3>Register or Log In</h3>
       {errorMessage ? <h5 className="error">{errorMessage}</h5> : null}
@@ -49,29 +48,8 @@ const Auth = ({
           } catch (error) {
             setErrorMessage(error.message);
           }
-        }}
-      >
-        Log In
-      </button>
+        }}>Log In</button>
     </form>
-    <div>
-        {postList.map((post) => {
-                            return (
-                            <div
-                                className="post"
-                                key={post._id}
-                                style={{
-                                border: "1px solid brown"
-                                }}
-                            >
-                                <h5>
-                                {post.title} ({post.location})
-                                </h5>
-                                <p>{post.description}</p>
-                            </div>
-                            );
-                        })}
-    </div> </>
   );
 };
 
