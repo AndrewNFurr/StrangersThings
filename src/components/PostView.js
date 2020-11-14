@@ -21,13 +21,35 @@ const MessageForm = ({
                             }}>Post Message</button>
                          </form>
 }
+const MessageView = ({
+    messageList
+}) => {
+    const [commentView, setCommentView] = useState(false);
+
+    return <div><button onClick={() => {
+        setCommentView(!commentView);
+    }}>Messages</button>
+
+    {
+    commentView  ?
+    messageList.map((message, idx) => {
+    return <div key={idx}>
+            <p 
+               style={{
+                   border: "1px solid black"
+               }}
+               >{message.content}</p>
+        </div>
+    }) : null
+    }
+    </div>  
+    
+}
 
 const PostView = ({
     postList,
     setPostList
 }) => {
-    const [commentView, setCommentView] = useState(false);
-
     return <div className='list'>
         {postList.map((post) => {
                             return (
@@ -49,19 +71,15 @@ const PostView = ({
                                     <div className='user-options'>
                                     <button onClick={async () => {
                                         try {
-                                            hitAPI("DELETE", `/posts/${post._id}`);
-                                            setPostList(postList);
+                                            const data = await hitAPI("DELETE", `/posts/${post._id}`);
+                                            setPostList(data.posts);
                                         } catch(error) {
                                             console.log(error)
                                         }
                                     }}>Delete</button>
 
-                                    <button onClick={() => {
-                                        console.log(post.messages, post)
-                                        setCommentView(!commentView);
-                                    }}>Messages</button>
-
                                     <button>Edit</button>
+                                    <MessageView messageList={ post.messages } />
                                     </div>
                                     : <div className='user-options'>
                                         <MessageForm 
@@ -80,20 +98,6 @@ const PostView = ({
                                                      }}/>
                                     </div>
                                 }
-                                <div>
-                                    {
-                                         commentView == true ?
-                                         post.messages.map((message, idx) => {
-                                         return <div key={idx}>
-                                                 <p 
-                                                    style={{
-                                                        border: "1px solid black"
-                                                    }}
-                                                    >{message.content}</p>
-                                             </div>
-                                         }) : null        
-                                    }
-                                </div>
                             </div>
                             );
                         })}
