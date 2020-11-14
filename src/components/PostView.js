@@ -50,6 +50,7 @@ const PostView = ({
     postList,
     setPostList,
     setEditablePost,
+    isLoggedIn
 }) => {
     return <div className='list'>
         {postList.map((post) => {
@@ -66,8 +67,8 @@ const PostView = ({
                                 </h5>
                                 <p>{post.description}</p>
 
-                                {
-                                    (post.isAuthor) ?
+                                {(isLoggedIn) ?
+                                    ((post.isAuthor) ?
                                     <div className='user-options'>
                                     <button onClick={async () => {
                                         try {
@@ -98,7 +99,7 @@ const PostView = ({
                                                         }
                                                        
                                                      }}/>
-                                    </div>
+                                    </div>) : null
                                 }
                             </div>
                             );

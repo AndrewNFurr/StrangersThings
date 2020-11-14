@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom'
 
 import { 
-    Auth,
     Header,
-    Welcome,
     Footer,
     PostForm,
     PostView
@@ -17,7 +15,6 @@ const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(!!getToken());
     const [postList, setPostList] = useState([]);
     const [searchResults, setSearchResults] = useState('');    
-    //const [isRecent, setIsRecent] = useState();
     const [searchTerm, setSearchTerm] = useState('');
     const [editablePost, setEditablePost] = useState({})
 
@@ -52,48 +49,40 @@ const App = () => {
   }, [isLoggedIn, postList]);
 
 
-        return (
-            <div className="app">
-            <Header />
-            <div id="search" >
-                      <label htmlFor="keywords">Search For a Post</label>
-                      <input 
-                        id="keywords" 
-                        type="text" 
-                        placeholder="Enter Post Title" 
-                        value={ searchTerm } 
-                        onChange={
-                                  (event) => {
-                                    setSearchTerm(event.target.value);
-                                  }}/>
-                   </div> 
-            {isLoggedIn ? (
-                <main id="main">
-                    <Welcome setIsLoggedIn={setIsLoggedIn}/>
-                    
-                    <div className="logged-in-view">
-                            <PostForm addNewPost={ addNewPost }
-                                      {...editablePost}
-                                      setEditablePost={setEditablePost}
-                                      updatePost={updatePost}
-                                        />
-                            <PostView setSearchResults={setSearchResults}
+  return (
+    <>
+    <Header
+      isLoggedIn={isLoggedIn}
+      setIsLoggedIn={setIsLoggedIn}
+      setPostList={setPostList}
+      postList={filteredPosts()} />
+    <div id="search" >
+      <label htmlFor="keywords">Search For a Post</label>
+      <input 
+        id="keywords" 
+        type="text" 
+        placeholder="Enter Post Title" 
+        value={ searchTerm } 
+        onChange={(event) => {
+          setSearchTerm(event.target.value);
+        }} />
+    </div> 
+    <div className="logged-in-view">
+      <PostForm addNewPost={ addNewPost }
+                {...editablePost}
+                setEditablePost={setEditablePost}
+                updatePost={updatePost} />
+      <PostView setSearchResults={setSearchResults}
                                 postList={filteredPosts()}
                                 setEditablePost={setEditablePost}
                                 setPostList={setPostList}
+                                isLoggedIn={isLoggedIn}
                                 />
-                    </div>
-                </main>
-                
-            ) : (
-                <Auth setIsLoggedIn={setIsLoggedIn}
-                      postList={filteredPosts()}
-                      setPostList={setPostList} />   
-            )}
-            <Footer />
-            </div>
-        );
-        };
+    </div>
+    <Footer />
+    </>
+  );
+};
 
 
 ReactDOM.render(
