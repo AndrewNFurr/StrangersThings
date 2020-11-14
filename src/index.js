@@ -5,7 +5,8 @@ import {
     Header,
     Footer,
     PostForm,
-    PostView
+    PostView,
+    MessageView
  } from './components';
 
  import { getToken, hitAPI } from "./api";
