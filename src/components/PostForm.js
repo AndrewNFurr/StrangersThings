@@ -3,15 +3,14 @@ import { makeUserPost } from '../api';
 
 const PostForm = ({
     addNewPost,
-    setPostList,
-    postList
 }) =>{
     const [postTitle, setPostTitle] = useState('');
     const [postContent, setPostContent] = useState('');
     const [price, setPrice] = useState('');
     const [location, setLocation] = useState('')
 
-    return <form onSubmit={(event) => event.preventDefault()}>
+    return <form className="post-form"  
+                onSubmit={(event) => event.preventDefault()}>
         <input
             type="text"
             value={postTitle}

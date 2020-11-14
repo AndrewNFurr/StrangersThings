@@ -58,12 +58,14 @@ const App = () => {
             {isLoggedIn ? (
                 <>
                 <Welcome setIsLoggedIn={setIsLoggedIn}/>
-                <PostForm addNewPost={ addNewPost }
-                           />
-                <PostView setSearchResults={setSearchResults}
-                          postList={filteredPosts()}
-                          setPostList={setPostList}
-                          searchResults={searchResults}/>
+                <div className="logged-in-view">
+                        <PostForm addNewPost={ addNewPost }
+                                    />
+                            <PostView setSearchResults={setSearchResults}
+                                    postList={filteredPosts()}
+                                    setPostList={setPostList}
+                                    searchResults={searchResults}/>
+                </div>
                 </>
             ) : (
                 <Auth setIsLoggedIn={setIsLoggedIn}
