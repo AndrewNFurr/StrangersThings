@@ -105,7 +105,8 @@ const App = () => {
           setUserPostsOnly(!userPostsOnly)}}>Show all posts</button>
         ) : (
         <button onClick={() => {
-          setUserPostsOnly(!userPostsOnly)}}>Show only user posts</button>)) : null}
+          setUserPostsOnly(!userPostsOnly)}}>Show only user posts</button>
+        )) : null}
     </div> 
     <div className="logged-in-view">
     <PostView setSearchResults={setSearchResults}
@@ -115,19 +116,22 @@ const App = () => {
                     isLoggedIn={isLoggedIn}
                     userPostsOnly={userPostsOnly}
                                 />
-        <div>{
-            userPostsOnly ? <> 
-                <h1>User Messages</h1>
+        <div className="formPlusMessages">
+          {isLoggedIn ? (
+            userPostsOnly ? (
+              <> 
+                <h1>Messages for User</h1>
                 <GetUserMessages />
-                </>
-            : null
-        }</div>
-        {isLoggedIn ?
-        <PostForm addNewPost={ addNewPost }
-                  {...editablePost}
-                  setEditablePost={setEditablePost}
-                  updatePost={updatePost} /> : null
-      }
+                <PostForm addNewPost={ addNewPost }
+                          {...editablePost}
+                          setEditablePost={setEditablePost}
+                          updatePost={updatePost} />
+              </>) : (
+            <PostForm addNewPost={ addNewPost }
+                      {...editablePost}
+                      setEditablePost={setEditablePost}
+                      updatePost={updatePost} />)) : null}
+        </div>
         
     </div>
     </>

@@ -5,6 +5,9 @@
   box-sizing: border-box;
 }
 
+div {
+  word-wrap: break-word;
+}
 
 #header {
   display: flex;
@@ -16,6 +19,10 @@
   color: white;
 
   padding: 1em;
+}
+
+#app {
+  width: 100vw;
 }
 
 .logged-in-view {
@@ -37,6 +44,10 @@
 }
 .post-form textarea {
     background-color: rgb(198, 216, 221);
+}
+
+.post-form > h3 {
+  margin-left: 3px;
 }
 
 .list {
