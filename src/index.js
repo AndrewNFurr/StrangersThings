@@ -55,7 +55,7 @@ const App = () => {
                           border: "5px solid olive",
                                 }}
                     >
-                       <h5>For: {post.title}</h5>
+                       <h3>For: {post.title}</h3>
                        { 
                            post.messages.map((message, idx) => {
                             return <div style={{
@@ -105,33 +105,29 @@ const App = () => {
           setUserPostsOnly(!userPostsOnly)}}>Show all posts</button>
         ) : (
         <button onClick={() => {
-          setUserPostsOnly(!userPostsOnly)}}>Show only user posts</button>
-        )) : null}
+          setUserPostsOnly(!userPostsOnly)}}>Show user posts/messages</button>)) : null}
     </div> 
     <div className="logged-in-view">
+    <div className="messageView">{
+            userPostsOnly ? <> 
+                <h2>Messages for User</h2>
+                <GetUserMessages />
+                </>
+            : null
+        }</div>
     <PostView setSearchResults={setSearchResults}
                     postList={filteredPosts()}
                     setEditablePost={setEditablePost}
                     setPostList={setPostList}
                     isLoggedIn={isLoggedIn}
                     userPostsOnly={userPostsOnly}
-                                />
-        <div className="formPlusMessages">
-          {isLoggedIn ? (
-            userPostsOnly ? (
-              <> 
-                <h1>Messages for User</h1>
-                <GetUserMessages />
-                <PostForm addNewPost={ addNewPost }
-                          {...editablePost}
-                          setEditablePost={setEditablePost}
-                          updatePost={updatePost} />
-              </>) : (
-            <PostForm addNewPost={ addNewPost }
-                      {...editablePost}
-                      setEditablePost={setEditablePost}
-                      updatePost={updatePost} />)) : null}
-        </div>
+                                />                
+        {isLoggedIn ?
+        <PostForm addNewPost={ addNewPost }
+                  {...editablePost}
+                  setEditablePost={setEditablePost}
+                  updatePost={updatePost} /> : null
+      }
         
     </div>
     </>

@@ -72,7 +72,7 @@ const PostForm = (props) => {
           clearForm();
       }}
     >
-      <h3>Create New Post</h3>
+      <h2>Create New Post</h2>
       <input
         type="text"
         placeholder="title for your post"

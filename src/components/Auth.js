@@ -4,7 +4,6 @@ import { auth } from "../api";
 
 const Auth = ({
     setIsLoggedIn,
-    isLoggedIn
 }) => {
 
   const [username, setUsername] = useState("");

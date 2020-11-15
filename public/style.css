@@ -27,16 +27,15 @@ div {
 
 .logged-in-view {
   display: grid;
-  grid-template-columns: 500px 400px 150px;
+  grid-template-columns: 1fr 2fr 1fr;
   grid-gap: 15px;
   border-radius: 1px solid black;
 }
 
 .post-form {
-  flex-grow: 1fr;
   display: flex;
   flex-direction: column;
-  width: 33vw
+  padding: 5px;
 }
 
 .post-form input {
@@ -45,18 +44,27 @@ div {
 .post-form textarea {
     background-color: rgb(198, 216, 221);
 }
+.post-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
 
-.post-form > h3 {
+.post-form > h2 {
   margin-left: 3px;
 }
 
 .list {
-  flex-grow: 5fr;
-  margin-left: 5px;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 3px;
 }
 
 .post {
   padding: 5px;
+  margin-top: 3px;
   margin-bottom: 10px;
 
   border-radius: 3px;
@@ -64,10 +72,18 @@ div {
 
   background-color: rgb(255, 236, 214);
 }
+.post > * {
+    padding: 3px;
+}
+
+.messageView {
+  padding: 5px;
+}
 
 button {
   border-radius: 5px;
   padding: 5px 5px;
+  margin: 3px;
   background-color: lightblue;
 }
 
@@ -100,10 +116,7 @@ textarea {
 }
 #search > input {
   width: 50vw;
-}
-
-#search > button {
-  margin-left: 5px;
+  margin-left: 15px;
 }
 
 #contents {
