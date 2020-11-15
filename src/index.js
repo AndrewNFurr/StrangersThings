@@ -18,6 +18,7 @@ const App = () => {
     const [searchResults, setSearchResults] = useState('');    
     const [searchTerm, setSearchTerm] = useState('');
     const [editablePost, setEditablePost] = useState({})
+    const [userPostsOnly, setUserPostsOnly] = useState(false);
 
     function addNewPost(newPost) {
         setPostList([...postList, newPost])
@@ -31,13 +32,21 @@ const App = () => {
       let postListCopy = [...postList];
       postListCopy[index] = updatedPost;
       setPostList(postListCopy);
+      }
     }
-    }
-
+    // this function filters global postList by user entered keywords
+    // also takes into consideration whether user wants to see only their own posts or all posts
+    // Though it feels a little verbose, it works for me. If you have a better method, by all means feel free to do as you please.
     function filteredPosts() {
+      if (userPostsOnly) {
         return postList.filter((post) => {
-            return post.title.toLowerCase().includes(searchTerm.toLowerCase());
-        })
+          return post.isAuthor & post.title.toLowerCase().includes(searchTerm.toLowerCase());
+        });
+      } else {
+        return postList.filter((post) => {
+          return post.title.toLowerCase().includes(searchTerm.toLowerCase());
+        });
+      };
     }
 
   useEffect(async () => {
@@ -67,6 +76,13 @@ const App = () => {
         onChange={(event) => {
           setSearchTerm(event.target.value);
         }} />
+      {isLoggedIn ? ( // if logged in, a button displays allowing user to toggle between user posts and all posts
+        userPostsOnly ? (
+        <button onClick={() => {
+          setUserPostsOnly(!userPostsOnly)}}>Show all posts</button>
+        ) : (
+        <button onClick={() => {
+          setUserPostsOnly(!userPostsOnly)}}>Show only user posts</button>)) : null}
     </div> 
     <div className="logged-in-view">
       {isLoggedIn ?
@@ -76,10 +92,10 @@ const App = () => {
                   updatePost={updatePost} /> : null
       }
       <PostView setSearchResults={setSearchResults}
-                                postList={filteredPosts()}
-                                setEditablePost={setEditablePost}
-                                setPostList={setPostList}
-                                isLoggedIn={isLoggedIn}
+                postList={filteredPosts()}
+                setEditablePost={setEditablePost}
+                setPostList={setPostList}
+                isLoggedIn={isLoggedIn}
                                 />
     </div>
     <Footer />
