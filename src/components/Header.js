@@ -8,6 +8,7 @@ const Header = ({
   isLoggedIn,
   setIsLoggedIn,
   setPostList,
+  setUserPostsOnly,
   postList}) => {
   return <div id='header'>
     {isLoggedIn ? (
@@ -17,6 +18,7 @@ const Header = ({
         onClick={() => {
         clearToken();
         setIsLoggedIn(false);
+        setUserPostsOnly(false);
       }}>LOG OUT</button>
       </>
     ) : (

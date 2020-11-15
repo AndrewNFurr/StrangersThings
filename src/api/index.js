@@ -1,4 +1,3 @@
-import axios from 'axios';
 
 const BASE_URL =
   "https://strangers-things.herokuapp.com/api/2007-LSU-RM-WEB-PT";
@@ -26,45 +25,6 @@ const setToken = (token) => {
   
     return base;
   }
-
-
-export const makeUserPost = async(title, description, price,) => {
-    const response = await fetch(`${BASE_URL}/posts`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${ getToken() }`
-        },
-        body: JSON.stringify({
-          post: {
-            title: title,
-            description: description,
-            price: price,
-            location: location
-          },
-        }),
-      });
-
-      const data = await response.json();
-      return data;
-}
-
-export async function getUser() {
-  const { data } = await axios.get(`${BASE_URL}/users/me`, {
-  headers: makeHeaders(),
-})
-    
-    return data
-}
-
-export async function getPosts() {
-    try {
-        const { data } = await axios.get(`${BASE_URL}/posts`);
-        return data;
-    } catch(error) {
-        throw error;
-    }
-}
  
   export const auth = async (username, password, isNew = false) => {
     const url = `${BASE_URL}/users` + (isNew ? "/register" : "/login");
@@ -117,20 +77,3 @@ export async function getPosts() {
   
     return data;
   };
-
-
-  export const createMessage = async(content, id) => {
-    const response = await fetch(`${BASE_URL}/posts/${id}/messages`, {
-        method: "POST",
-        headers: makeHeaders(),
-        body: JSON.stringify({
-          message: {
-            content: content
-          },
-        }),
-      });
-
-      const data = await response.json();
-
-      return data;
-}

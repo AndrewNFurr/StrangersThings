@@ -3,10 +3,8 @@ import ReactDOM from 'react-dom'
 
 import { 
     Header,
-    Footer,
     PostForm,
     PostView,
-    MessageView
  } from './components';
 
  import { getToken, hitAPI } from "./api";
@@ -40,13 +38,37 @@ const App = () => {
     function filteredPosts() {
       if (userPostsOnly) {
         return postList.filter((post) => {
-          return post.isAuthor & post.title.toLowerCase().includes(searchTerm.toLowerCase());
+          return post.isAuthor && post.title.toLowerCase().includes(searchTerm.toLowerCase());
         });
       } else {
         return postList.filter((post) => {
           return post.title.toLowerCase().includes(searchTerm.toLowerCase());
         });
       };
+    }
+    const GetUserMessages = () => {
+        return postList.map(post => {
+            return post.isAuthor ? <div
+                       className="post"
+                       key={post._id}
+                       style={{
+                          border: "5px solid olive",
+                                }}
+                    >
+                       <h5>For: {post.title}</h5>
+                       { 
+                           post.messages.map((message, idx) => {
+                            return <div style={{
+                               border: "2px solid tan",
+                               margin: "2px"
+                           }}  >
+                                <p key={idx}>From: {message.fromUser.username}</p>
+                                  <p>{message.content}</p> 
+                                  </div>
+                           })
+                       } 
+            </div> : null
+        })
     }
 
   useEffect(async () => {
@@ -65,7 +87,8 @@ const App = () => {
       isLoggedIn={isLoggedIn}
       setIsLoggedIn={setIsLoggedIn}
       setPostList={setPostList}
-      postList={filteredPosts()} />
+      postList={filteredPosts()}
+      setUserPostsOnly={setUserPostsOnly} />
     <div id="search" >
       <label htmlFor="keywords">Search For a Post</label>
       <input 
@@ -85,20 +108,28 @@ const App = () => {
           setUserPostsOnly(!userPostsOnly)}}>Show only user posts</button>)) : null}
     </div> 
     <div className="logged-in-view">
-      {isLoggedIn ?
+    <PostView setSearchResults={setSearchResults}
+                    postList={filteredPosts()}
+                    setEditablePost={setEditablePost}
+                    setPostList={setPostList}
+                    isLoggedIn={isLoggedIn}
+                    userPostsOnly={userPostsOnly}
+                                />
+        <div>{
+            userPostsOnly ? <> 
+                <h1>User Messages</h1>
+                <GetUserMessages />
+                </>
+            : null
+        }</div>
+        {isLoggedIn ?
         <PostForm addNewPost={ addNewPost }
                   {...editablePost}
                   setEditablePost={setEditablePost}
                   updatePost={updatePost} /> : null
       }
-      <PostView setSearchResults={setSearchResults}
-                postList={filteredPosts()}
-                setEditablePost={setEditablePost}
-                setPostList={setPostList}
-                isLoggedIn={isLoggedIn}
-                                />
+        
     </div>
-    <Footer />
     </>
   );
 };

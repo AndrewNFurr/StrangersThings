@@ -63,7 +63,6 @@ const PostForm = (props) => {
           } else {
               try {
                     const newPost = await hitAPI("POST", `/posts`, postData);
-                    console.log(newPost)
                     addNewPost(newPost.post);
               } catch (error) {
                     console.error(error);

@@ -13,7 +13,8 @@ const Auth = ({
 
 
   return (
-    <form onSubmit={(event) => event.preventDefault()}>
+    <form className='login-form'
+          onSubmit={(event) => event.preventDefault()}>
       <h3>Register or Log In</h3>
       {errorMessage ? <h5 className="error">{errorMessage}</h5> : null}
       <input
@@ -29,9 +30,9 @@ const Auth = ({
         placeholder="password"
       />
       <button
-        onClick={async (event) => {
+        onClick={async () => {
           try {
-            const result = await auth(username, password, true);
+            await auth(username, password, true);
             setIsLoggedIn(true);
           } catch (error) {
             setErrorMessage(error.message);
@@ -41,11 +42,10 @@ const Auth = ({
         Register
       </button>
       <button
-        onClick={async (event) => {
+        onClick={async () => {
           try {
-            const result = await auth(username, password);
+            await auth(username, password);
             setIsLoggedIn(true);
-            console.log(isLoggedIn)
           } catch (error) {
             setErrorMessage(error.message);
           }

@@ -33,13 +33,13 @@ const MessageView = ({
     {
     commentView  ?
     messageList.map((message, idx) => {
-    return <div key={idx}>
-            <p 
-               style={{
-                   border: "1px solid black"
-               }}
-               >{message.content}</p>
-        </div>
+    return <div style={{
+        border: "2px solid tan",
+        margin: "2px"
+    }}  >
+         <p key={idx}>From: {message.fromUser.username}</p>
+           <p>{message.content}</p> 
+           </div>
     }) : null
     }
     </>  
@@ -50,21 +50,24 @@ const PostView = ({
     postList,
     setPostList,
     setEditablePost,
-    isLoggedIn
+    isLoggedIn,
+    userPostsOnly
 }) => {
-    return <div className='list'>
+    return  <div className='list'>
+        <h1>{userPostsOnly ? "User Posts" : "All Posts"}</h1>
         {postList.map((post) => {
                             return (
                             <div
                                 className="post"
                                 key={post._id}
                                 style={{
-                                border: post.isAuthor ? "5px solid gold" : "1px solid brown",
+                                border: post.isAuthor ? "5px solid olive" : "3px solid orange",
                                 }}
                             >
                                 <h5>
-                                {post.title} ({post.location}) {post.price}
+                                {post.title} ({post.location}) 
                                 </h5>
+                                <p><strong>Price: {post.price}</strong></p>
                                 <p>{post.description}</p>
                                 <p> Will deliver: {post.willDeliver ? 'Yes' : 'No'}</p>
 
@@ -82,7 +85,6 @@ const PostView = ({
 
                                     <button onClick={() => {
                                         setEditablePost(post)
-                                        console.log(post.willDeliver)
                                     }}>Edit</button>
                                     <MessageView messageList={ post.messages } />
                                     </div>
