@@ -1,0 +1,100 @@
+* {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+#header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: #cb4200;
+  color: white;
+
+  padding: 1em;
+}
+
+.logged-in-view {
+  display: grid;
+  grid-template-columns: 500px 400px 150px;
+  grid-gap: 15px;
+  border-radius: 1px solid black;
+}
+
+.post-form {
+  flex-grow: 1fr;
+  display: flex;
+  flex-direction: column;
+  width: 33vw
+}
+
+.post-form input {
+    background-color: rgb(198, 216, 221);
+}
+.post-form textarea {
+    background-color: rgb(198, 216, 221);
+}
+
+.list {
+  flex-grow: 5fr;
+  margin-left: 5px;
+}
+
+.post {
+  padding: 5px;
+  margin-bottom: 10px;
+
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
+  background-color: rgb(255, 236, 214);
+}
+
+button {
+  border-radius: 5px;
+  padding: 5px 5px;
+  background-color: lightblue;
+}
+
+button:hover {
+  background-color: darkcyan;
+}
+
+button:active {
+  background-color: blue;
+  color: azure;
+}
+
+input {
+  border: 1px solid black;
+  margin: 3px;
+  border-radius: 5px;
+  padding: 2px 5px;
+}
+
+textarea {
+  border: 1px solid black;
+  margin: 3px;
+  border-radius: 5px;
+  padding: 2px 5px;
+}
+
+#search {
+  background-color: lightgray;
+  padding: 5px;
+}
+#search > input {
+  width: 50vw;
+}
+
+#search > button {
+  margin-left: 5px;
+}
+
+#contents {
+  height: 150px;
+}
