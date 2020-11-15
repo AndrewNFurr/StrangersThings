@@ -53,8 +53,9 @@ const PostView = ({
     isLoggedIn,
     userPostsOnly
 }) => {
-    return  <div className='list'>
-        <h1>{userPostsOnly ? "User Posts" : "All Posts"}</h1>
+    return <div className='post-view'>
+    <h1>{userPostsOnly ? "User Posts" : "All Posts"}</h1> 
+    <div className='list'>
         {postList.map((post) => {
                             return (
                             <div
@@ -68,9 +69,8 @@ const PostView = ({
                                 {post.title} ({post.location}) 
                                 </h5>
                                 <p><strong>Price: {post.price}</strong></p>
-                                <p>{post.description}</p>
                                 <p> Will deliver: {post.willDeliver ? 'Yes' : 'No'}</p>
-
+                                <p><em>{post.description}</em></p>
                                 {(isLoggedIn) ?
                                     ((post.isAuthor) ?
                                     <div className='user-options'>
@@ -108,7 +108,7 @@ const PostView = ({
                             </div>
                             );
                         })}
-    </div>
+    </div> </div>
 }
 
 export default PostView
